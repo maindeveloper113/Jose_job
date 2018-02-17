@@ -14,6 +14,8 @@ import SizePicker from '../components/SizePicker'
 import Radio from '../components/Radio'
 import SizeRadio  from '../components/SizeRadio'
 
+const defaultOptions = [5, 10, 15, 20]
+
 class AsyncApp extends Component {
   constructor(props) {
     super(props)
@@ -82,6 +84,11 @@ class AsyncApp extends Component {
 
   render() {
     const { selectedContent, selectedSize, posts, isFetching, lastUpdated } = this.props
+    let options = defaultOptions.slice();
+    if (defaultOptions.indexOf(selectedSize) === -1) {
+      options.push(selectedSize)
+    }
+
     return (
       <div>
         {isFetching && posts.length === 0 && <h2>Loading...</h2>}
@@ -116,7 +123,7 @@ class AsyncApp extends Component {
                 <SizePicker
                   value={selectedSize}
                   onChange={this.handleSelectedSizeChange}
-                  options={[5, 10, 15, 20]}
+                  options={options}
                 />
               </div>
             </div>
@@ -141,7 +148,7 @@ class AsyncApp extends Component {
                 <SizeRadio
                   value={selectedSize}
                   onChange={this.handleSelectedSizeChange}
-                  options={[5, 10, 15, 20]}
+                  options={options}
                 />
               </div>
             </div>
