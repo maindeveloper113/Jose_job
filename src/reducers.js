@@ -59,7 +59,7 @@ function postsByContent(state = {}, action) {
   }
 }
 
-function selectedSize(state = 10, action) {
+function selectedSize(state = 5, action) {
   switch(action.type) {
     case RECEIVE_SIZE:
       return action.size;

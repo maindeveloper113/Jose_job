@@ -11,6 +11,8 @@ import Dropdown from 'react-dropdown'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 import SizePicker from '../components/SizePicker'
+import Radio from '../components/Radio'
+import SizeRadio  from '../components/SizeRadio'
 
 class AsyncApp extends Component {
   constructor(props) {
@@ -93,6 +95,31 @@ class AsyncApp extends Component {
               </div>
               <div>
                 <SizePicker
+                  value={selectedSize}
+                  onChange={this.handleSelectedSizeChange}
+                  options={[5, 10, 15, 20]}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="right-rail-wrapper">
+          <div className="filters">
+            <div className="filters-wrapper">
+              <span className="heading">
+                <span>Radio</span>
+                <a className="clear" href="#">Clear</a>
+              </span>
+              <div>
+                <Radio
+                  value={selectedContent}
+                  onChange={this.handleChange}
+                  options={['design', 'bitcoin']}
+                />
+              </div>
+              <br/>
+              <div>
+                <SizeRadio
                   value={selectedSize}
                   onChange={this.handleSelectedSizeChange}
                   options={[5, 10, 15, 20]}
