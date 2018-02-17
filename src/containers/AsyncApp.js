@@ -63,50 +63,45 @@ class AsyncApp extends Component {
     const { selectedContent, selectedSize, posts, isFetching, lastUpdated } = this.props
     return (
       <div>
-
         {isFetching && posts.length === 0 && <h2>Loading...</h2>}
         {!isFetching && posts.length === 0 && <h2>Empty.</h2>}
-        {posts.length > 0 &&
+        {
+          posts.length > 0 &&
           <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             <Posts posts={posts} />
-          </div>}
+          </div>
+        }
 
         <div className="right-rail-wrapper">
-        <div className="filters">
-          <div className="filters-wrapper">
-            <span className="heading">
-              <span>Filters</span>
-              <a className="clear" href="#">Clear</a>
-            </span>
-
-          <div>
-
-            <Dropdown
-              value={selectedContent}
-              onChange={this.handleChange1.bind(this)}
-              options={['design', 'bitcoin']}
-              />
-
-            <Picker
-              value={selectedContent}
-              onChange={this.handleChange}
-              options={['design', 'bitcoin']}
-            />
-
+          <div className="filters">
+            <div className="filters-wrapper">
+              <span className="heading">
+                <span>Filters</span>
+                <a className="clear" href="#">Clear</a>
+              </span>
+              <div>
+                <Dropdown
+                  value={selectedContent}
+                  onChange={this.handleChange1.bind(this)}
+                  options={['design', 'bitcoin']}
+                />
+                <Picker
+                  value={selectedContent}
+                  onChange={this.handleChange}
+                  options={['design', 'bitcoin']}
+                />
+              </div>
+              <div>
+                <SizePicker
+                  value={selectedSize}
+                  onChange={this.handleSelectedSizeChange}
+                  options={[5, 10, 15, 20]}
+                />
+              </div>
+            </div>
           </div>
-
-          <div>
-            <SizePicker
-              value={selectedSize}
-              onChange={this.handleSelectedSizeChange}
-              options={[5, 10, 15, 20]}
-            />
-          </div>
-
+        </div>
       </div>
-    </div>
-  </div>
-</div>
     )
   }
 }
