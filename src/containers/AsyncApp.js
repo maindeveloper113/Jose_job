@@ -20,17 +20,36 @@ class AsyncApp extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleRefreshClick = this.handleRefreshClick.bind(this)
     this.handleSelectedSizeChange = this.handleSelectedSizeChange.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
     const { dispatch, selectedContent, selectedSize } = this.props
     dispatch(fetchPostsIfNeeded(selectedContent, selectedSize))
+
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedContent !== prevProps.selectedContent) {
       const { dispatch, selectedContent, selectedSize } = this.props
       dispatch(fetchPostsIfNeeded(selectedContent, selectedSize))
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll() {
+    var winHeight = window.innerHeight;
+    var body = document.body;
+    var html = document.documentElement;
+    var docHeight = Math.max( body.scrollHeight, body.offsetHeight, 
+                    html.clientHeight, html.scrollHeight, html.offsetHeight );
+    var positionY = window.scrollY;
+    if (winHeight + positionY === docHeight) {
+      this.handleSelectedSizeChange(this.props.selectedSize + 5)
     }
   }
 
