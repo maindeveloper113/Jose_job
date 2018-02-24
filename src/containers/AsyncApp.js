@@ -16,6 +16,17 @@ import SizeRadio  from '../components/SizeRadio'
 
 const defaultOptions = [5, 10, 15, 20]
 
+const contentOptionsObject = [
+  {
+    value: 'design',
+    label: 'Best Design'
+  },
+  {
+    value: 'bitcoin',
+    label: 'About Bitcoin'
+  }
+]
+
 class AsyncApp extends Component {
   constructor(props) {
     super(props)
@@ -56,14 +67,15 @@ class AsyncApp extends Component {
     }
   }
 
-  handleChange(nextContent) {
+  handleChange(label) {
+    const nextContent = contentOptionsObject.find((item) => item.label === label).value
     const { selectedSize } = this.props
     this.props.dispatch(selectContent(nextContent))
     this.props.dispatch(fetchPostsIfNeeded(nextContent, selectedSize))
   }
 
   handleChange1(e) {
-    const nextContent = e.value;
+    const nextContent = contentOptionsObject.find((item) => item.label === e.value).value
     const { selectedSize } = this.props
     this.props.dispatch(selectContent(nextContent))
     this.props.dispatch(fetchPostsIfNeeded(nextContent, selectedSize))
@@ -98,6 +110,13 @@ class AsyncApp extends Component {
       options.push(selectedSize)
     }
 
+    const selectedContentLabel = contentOptionsObject.find((item) => item.value === selectedContent).label
+
+    const contentOptions = []
+    contentOptionsObject.map((item) => {
+      contentOptions.push(item.label)
+    })
+
     return (
       <div>
         {isFetching && posts.length === 0 && <h2>Loading...</h2>}
@@ -118,14 +137,14 @@ class AsyncApp extends Component {
               </span>
               <div>
                 <Dropdown
-                  value={selectedContent}
+                  value={selectedContentLabel}
                   onChange={this.handleChange1.bind(this)}
-                  options={['design', 'bitcoin']}
+                  options={contentOptions}
                 />
                 <Picker
-                  value={selectedContent}
+                  value={selectedContentLabel}
                   onChange={this.handleChange}
-                  options={['design', 'bitcoin']}
+                  options={contentOptions}
                 />
               </div>
               <div>
@@ -147,9 +166,9 @@ class AsyncApp extends Component {
               </span>
               <div>
                 <Radio
-                  value={selectedContent}
+                  value={selectedContentLabel}
                   onChange={this.handleChange}
-                  options={['design', 'bitcoin']}
+                  options={contentOptions}
                 />
               </div>
               <br/>
