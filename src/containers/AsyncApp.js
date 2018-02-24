@@ -23,6 +23,7 @@ class AsyncApp extends Component {
     this.handleRefreshClick = this.handleRefreshClick.bind(this)
     this.handleSelectedSizeChange = this.handleSelectedSizeChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.initParameters = this.initParameters.bind(this);
   }
 
   componentDidMount() {
@@ -82,6 +83,14 @@ class AsyncApp extends Component {
     this.props.dispatch(fetchPostsIfNeeded(selectedContent, nextSelectedSize))
   }
 
+  initParameters() {
+    const selectedContent = 'design'
+    const selectedSize = 5
+    this.props.dispatch(selectSize(selectedSize))
+    this.props.dispatch(selectContent(selectedContent))
+    this.props.dispatch(fetchPostsIfNeeded(selectedContent, selectedSize))
+  }
+
   render() {
     const { selectedContent, selectedSize, posts, isFetching, lastUpdated } = this.props
     let options = defaultOptions.slice();
@@ -105,7 +114,7 @@ class AsyncApp extends Component {
             <div className="filters-wrapper">
               <span className="heading">
                 <span>Filters</span>
-                <a className="clear" href="#">Clear</a>
+                <a className="clear" onClick={this.initParameters}>Clear</a>
               </span>
               <div>
                 <Dropdown
@@ -134,7 +143,7 @@ class AsyncApp extends Component {
             <div className="filters-wrapper">
               <span className="heading">
                 <span>Radio</span>
-                <a className="clear" href="#">Clear</a>
+                <a className="clear" onClick={this.initParameters}>Clear</a>
               </span>
               <div>
                 <Radio
