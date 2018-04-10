@@ -13,8 +13,11 @@ import Posts from '../components/Posts'
 import SizePicker from '../components/SizePicker'
 import Radio from '../components/Radio'
 import SizeRadio  from '../components/SizeRadio'
+import DropDown from '../components/DropDown'
 
 const defaultOptions = [5, 10, 15, 20]
+const languages = ["English", "Spanish", "Mandarin"]
+const defaultLanguage = "English"
 
 const contentOptionsObject = [
   {
@@ -30,11 +33,15 @@ const contentOptionsObject = [
 class AsyncApp extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      selectedLanguage: "",
+    }
     this.handleChange = this.handleChange.bind(this)
     this.handleRefreshClick = this.handleRefreshClick.bind(this)
     this.handleSelectedSizeChange = this.handleSelectedSizeChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.initParameters = this.initParameters.bind(this);
+    this.handleLanguageSelect = this.handleLanguageSelect.bind(this);
   }
 
   componentDidMount() {
@@ -101,6 +108,12 @@ class AsyncApp extends Component {
     this.props.dispatch(selectSize(selectedSize))
     this.props.dispatch(selectContent(selectedContent))
     this.props.dispatch(fetchPostsIfNeeded(selectedContent, selectedSize))
+  }
+
+  handleLanguageSelect(value) {
+    this.setState({
+      selectedLanguage: value,
+    });
   }
 
   render() {
@@ -177,6 +190,25 @@ class AsyncApp extends Component {
                   value={selectedSize}
                   onChange={this.handleSelectedSizeChange}
                   options={options}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="right-rail-wrapper">
+          <div className="filters">
+            <div className="filters-wrapper">
+              <span className="heading">
+                <span>Default State DropDown</span>
+              </span>
+              <div>
+                <div style={{marginTop: 20}}>
+                  Selected Language: {this.state.selectedLanguage}
+                </div> 
+                <DropDown
+                  handleSelect={this.handleLanguageSelect}
+                  languages={languages}
+                  defaultLanguage={defaultLanguage}
                 />
               </div>
             </div>
