@@ -14,6 +14,7 @@ import SizePicker from '../components/SizePicker'
 import Radio from '../components/Radio'
 import SizeRadio  from '../components/SizeRadio'
 import DropDown from '../components/DropDown'
+import Footer from '../components/Footer'
 
 const defaultOptions = [5, 10, 15, 20]
 const languages = ["English", "Spanish", "Mandarin"]
@@ -214,6 +215,7 @@ class AsyncApp extends Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     )
   }
