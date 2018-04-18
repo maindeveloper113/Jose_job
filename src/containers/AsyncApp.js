@@ -64,13 +64,13 @@ class AsyncApp extends Component {
   }
 
   handleScroll() {
-    var winHeight = window.innerHeight;
-    var body = document.body;
-    var html = document.documentElement;
-    var docHeight = Math.max( body.scrollHeight, body.offsetHeight, 
-                    html.clientHeight, html.scrollHeight, html.offsetHeight );
-    var positionY = window.scrollY;
-    if (winHeight + positionY === docHeight) {
+    if (this.props.isFetching) return;
+    const footerHeight = document.getElementById('footer').clientHeight;
+    const winHeight = window.innerHeight;
+    const body = document.body;
+    const docHeight = body.clientHeight;
+    const positionY = window.scrollY;
+    if (winHeight + positionY >= docHeight - footerHeight) {
       this.handleSelectedSizeChange(this.props.selectedSize + 5)
     }
   }
@@ -123,14 +123,13 @@ class AsyncApp extends Component {
     if (defaultOptions.indexOf(selectedSize) === -1) {
       options.push(selectedSize)
     }
-
     const selectedContentLabel = contentOptionsObject.find((item) => item.value === selectedContent).label
 
     const contentOptions = []
     contentOptionsObject.map((item) => {
       contentOptions.push(item.label)
     })
-
+    
     return (
       <div>
         {isFetching && posts.length === 0 && <h2>Loading...</h2>}
