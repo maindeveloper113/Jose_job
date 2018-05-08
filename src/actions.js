@@ -35,11 +35,12 @@ function requestPosts(content) {
 }
 
 function receivePosts(content, size, json) {
+  const posts = json[0].articles.concat(json[1].articles);
   return {
     type: RECEIVE_POSTS,
     content,
     size,
-    posts: json.articles,
+    posts,
     receivedAt: Date.now()
   }
 }
@@ -59,13 +60,7 @@ function fetchPosts(content, size) {
     });
     
     Promise.all([callApi1, callApi2]).then(result => {
-      //---- result[0] is api1 result ----
-      console.log("=================== api1 result:", result[0]);
-      //---- result[1] is api2 result ----
-      console.log("=================== api2 result:", result[1]);
-      
-      
-      dispatch(receivePosts(content, size, result[0])); 
+      dispatch(receivePosts(content, size, result)); 
     })
   }
 }
