@@ -47,9 +47,26 @@ function receivePosts(content, size, json) {
 function fetchPosts(content, size) {
   return dispatch => {
     dispatch(requestPosts(content))
-    return fetch(`https://newsapi.org/v2/everything?q=${content}&pageSize=${size}&apiKey=1b82488a0e2145eea6c06d156187e078`)
-      .then(response => response.json())
-      .then(json => dispatch(receivePosts(content, size, json)))
+    
+    const callApi1 = new Promise((resolve) => {
+      fetch(`https://newsapi.org/v2/everything?q=${content}&pageSize=${size}&apiKey=1b82488a0e2145eea6c06d156187e078`)
+      .then(response => response.json()).then(json => resolve(json));
+    });
+    
+    const callApi2 = new Promise((resolve) => {
+      fetch(`https://newsapi.org/v2/everything?q=china&pageSize=${size}&apiKey=1b82488a0e2145eea6c06d156187e078`)
+      .then(response => response.json()).then(json => resolve(json));
+    });
+    
+    Promise.all([callApi1, callApi2]).then(result => {
+      //---- result[0] is api1 result ----
+      console.log("=================== api1 result:", result[0]);
+      //---- result[1] is api2 result ----
+      console.log("=================== api2 result:", result[1]);
+      
+      
+      dispatch(receivePosts(content, size, result[0])); 
+    })
   }
 }
 
